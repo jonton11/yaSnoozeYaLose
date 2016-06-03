@@ -1,0 +1,16 @@
+<div class="authform">
+  <%= simple_form_for(@user) do |f| %>
+    <div class="form-inputs">
+      <%= f.input :first_name %>
+      <%= f.input :last_name %>
+      <%= f.input :email %>
+      <%= f.input :password %>
+      <%= f.input :password_confirmation %>
+      <% if current_page?(new_user_path) %>
+      <%= f.submit 'Sign up', :class => 'button right' %>
+      <% else %>
+      <%= f.submit 'Save', :class => 'button right' %>
+      <% end %>
+     </div>
+  <% end %>
+</div>

@@ -1,0 +1,58 @@
+<!-- TODO: Style -->
+
+<div class="container">
+  <p>
+    <strong>TEAM:</strong>
+    <%= @team.name %>
+  </p>
+
+  <!-- Current User Tracker -->
+  <p>
+    Player: <%= current_user.full_name %>
+  </p>
+  <% 7.times do |checkbox| %>
+   <div class="checkbox">
+     <i id="tracker" class="fa fa-circle-thin fa-2x"><input type="checkbox"></i>
+   </div>
+  <% end %>
+
+  <!-- Team Tracker -->
+  <% @team.users.each do |user| %>
+    <% unless current_user == user %>
+     <p>
+       Player: <%= user.full_name %>
+     </p>
+      <% 7.times do |checkbox| %>
+       <div class="checkbox">
+         <i id="tracker" class="fa fa-circle-thin fa-2x"><input type="checkbox"></i>
+       </div>
+      <% end %>
+       <br /><br>
+     <% end %>
+   <% end %>
+
+<hr />
+ <span id="avg-score">
+   AVERAGE SCORE:
+ </span>
+ <span id="lead-player">
+   PLAYER IN THE LEAD:
+ </span>
+ <br /><br />
+ <p>
+   GRAPH OF EVERYONE'S PROGRESS DOWN HERE
+ </p>
+</div>
+
+<script>
+  $(".fa-circle-thin").click(function(){
+    if ($(this).hasClass('fa-circle-thin')) {
+      $(this).removeClass('fa-circle-thin');
+      $(this).addClass('fa-check-circle');
+    } else {
+      $(this).removeClass('fa-check-circle');
+      $(this).addClass('fa-circle-thin');
+    }
+  });
+  // Event delegation not necessary here? We're only rendering 7 circles max
+</script>

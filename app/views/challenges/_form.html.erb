@@ -1,0 +1,14 @@
+<div class="authform">
+  <%= simple_form_for(@challenge) do |f| %>
+    <div class="form-inputs">
+      <%= f.input :name %>
+      <%= f.input :description %>
+      <%= f.input :start_date %>
+      <%= f.association :team %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.button :submit %>
+    </div>
+  <% end %>
+</div>

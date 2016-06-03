@@ -1,0 +1,27 @@
+.container {
+  margin-left: 20px;
+}
+
+.checkbox {
+  display: inline;
+  margin-left: 15px;
+}
+
+.checkbox {
+  input[type="checkbox"] {
+    display: none;
+    // How do we merge this with the fa-icon?
+  }
+}
+
+#avg-score {
+  float: left;
+}
+
+#lead-player {
+  float: right;
+}
+
+.fa-check-circle {
+  color: green;
+}

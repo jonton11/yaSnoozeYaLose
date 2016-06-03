@@ -1,0 +1,12 @@
+<div class="authform">
+  <%= simple_form_for(@team) do |f| %>
+    <h3>New Team</h3>
+    <div class="form-inputs">
+      <%= f.input :name %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.button :submit %>
+    </div>
+  <% end %>
+</div>
