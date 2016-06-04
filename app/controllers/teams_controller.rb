@@ -6,6 +6,7 @@ class TeamsController < ApplicationController # :nodoc:
   end
 
   def show
+    # @challenges = Challenge.all.where(team_id: current_team) 
   end
 
   def new

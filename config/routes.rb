@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :challenges
+  resources :challenges do
+    resources :user_challenges, only: [:create, :update, :destroy]
+  end
 
   resources :teams
 

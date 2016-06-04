@@ -5,13 +5,14 @@
 .checkbox {
   display: inline;
   margin-left: 15px;
-}
-
-.checkbox {
   input[type="checkbox"] {
     display: none;
     // How do we merge this with the fa-icon?
   }
+}
+
+.fa-check-circle {
+  color: green;
 }
 
 #avg-score {
@@ -20,8 +21,4 @@
 
 #lead-player {
   float: right;
-}
-
-.fa-check-circle {
-  color: green;
 }

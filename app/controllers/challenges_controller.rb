@@ -17,6 +17,7 @@ class ChallengesController < ApplicationController # :nodoc:
 
   def create
     @challenge = Challenge.new(challenge_params)
+    @streak = UserChallenge.new(challenge_id: @challenge, user_id: current_user, streak_count: 0)
 
     respond_to do |format|
       if @challenge.save
@@ -58,4 +59,8 @@ class ChallengesController < ApplicationController # :nodoc:
   def challenge_params
     params.require(:challenge).permit(:name, :description, :start_date, :team_id)
   end
+  #
+  # def user_challenges_params
+  #   params.require(:user_challenges).permit(:challenge_id, :user_id, :streak_count)
+  # end
 end
