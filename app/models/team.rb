@@ -1,5 +1,6 @@
 class Team < ActiveRecord::Base # :nodoc:
-  validates :name, presence: { message: 'Your team must have a name!' }
+  validates :name, presence: { message: 'Your team must have a name!' },
+                   uniqueness: { message: 'Team name taken' }
 
   has_many :challenges, dependent: :destroy
 

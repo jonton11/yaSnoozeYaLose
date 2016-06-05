@@ -3,7 +3,12 @@ Rails.application.routes.draw do
     resources :challenge_actions, only: [:create, :update, :destroy]
   end
 
-  resources :teams
+  # Can we refactor this? teams/teams/join is gross
+  resources :teams do
+    collection do
+      get 'teams/join' => 'teams#join'
+    end
+  end
 
   resources :users
 

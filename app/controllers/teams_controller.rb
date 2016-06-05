@@ -53,6 +53,20 @@ class TeamsController < ApplicationController # :nodoc:
     end
   end
 
+  def join
+    @team = Team.find_by_name(params[:search])
+    if @team
+      @membership = Member.new(user_id: current_user.id, team_id: @team.id)
+      if @membership.save
+        current_user.members.push(@membership)
+        redirect_to @team
+      else
+        render :join
+        flash[:alert] = 'No team found'
+      end
+    end
+  end
+
   private
 
   def set_team
@@ -79,5 +93,13 @@ class TeamsController < ApplicationController # :nodoc:
     @member = Member.new(team_id: @team.id, user_id: current_user.id)
     @team.members.push(@member)
     # Associate the current user with the team just created
+  end
+
+  def self.search_team(search)
+    if search
+      find(:all, conditions: ['name LIKE ?', "%#{search}"])
+    else
+      false
+    end
   end
 end
