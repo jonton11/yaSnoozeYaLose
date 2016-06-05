@@ -12,6 +12,8 @@ class ChallengesController < ApplicationController # :nodoc:
 
   def new
     @challenge = Challenge.new
+    set_allowed_teams
+    @teams = Team.where(id: @team_ids)
   end
 
   def edit
@@ -55,6 +57,14 @@ class ChallengesController < ApplicationController # :nodoc:
 
   def set_challenge
     @challenge = Challenge.find(params[:id])
+  end
+
+  def set_allowed_teams
+    @team_ids = []
+    @memberships = Member.where(user_id: current_user)
+    @memberships.each do |member|
+      @team_ids.push(member.team_id)
+    end
   end
 
   def challenge_params

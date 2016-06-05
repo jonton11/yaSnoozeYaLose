@@ -4,7 +4,7 @@
       <%= f.input :name %>
       <%= f.input :description %>
       <%= f.input :start_date %>
-      <%= f.association :team %>
+      <%= f.association :team, as: :collection_select, collection: @teams %>
     </div>
 
     <div class="form-actions">
