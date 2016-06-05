@@ -73,12 +73,17 @@ class ChallengesController < ApplicationController # :nodoc:
   end
 
   def create_challenge_actions
-    @actions = ChallengeAction.new(action_params)
-    @challenge.challenge_actions.push(@actions)
+    # Create challenge actions for all users in that team
+    @team = @challenge.team
+    @team.users.each do |user|
+      @user = user
+      @actions = ChallengeAction.new(action_params)
+      @challenge.challenge_actions.push(@actions)
+    end
   end
 
   def action_params
-    { challenge_id: @challenge, user_id: current_user.id, streak_count: 0 }
+    { challenge_id: @challenge, user_id: @user.id, streak_count: 0 }
   end
 
   def find_challenge_ids
