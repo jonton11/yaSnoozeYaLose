@@ -7,7 +7,8 @@ class ChallengesController < ApplicationController # :nodoc:
   end
 
   def show
-    # user.challenge_actions.find(:challenge_id).streak_count
+    # byebug
+    @streak_count = current_user.challenge_actions.find_by_challenge_id(params[:id]).streak_count
   end
 
   def new
