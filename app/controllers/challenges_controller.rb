@@ -2,11 +2,12 @@ class ChallengesController < ApplicationController # :nodoc:
   before_action :set_challenge, only: [:show, :edit, :update, :destroy]
 
   def index
-    player_challenges = ChallengeAction.all.where(user_id: current_user)
-    @challenges = Challenge.all.where(player_challenges)
+    find_challenge_ids
+    @challenges = Challenge.all.where(id: @challenge_ids)
   end
 
   def show
+    # user.challenge_actions.find(:challenge_id).streak_count
   end
 
   def new
@@ -18,10 +19,9 @@ class ChallengesController < ApplicationController # :nodoc:
 
   def create
     @challenge = Challenge.new(challenge_params)
-    @current_streak = ChallengeAction.new(challenge_action_params)
-
     respond_to do |format|
       if @challenge.save
+        create_challenge_actions
         format.html { redirect_to team_path(@challenge.team), notice: 'Challenge created.' }
         format.json { render :show, status: :created, location: @challenge }
       else
@@ -61,7 +61,20 @@ class ChallengesController < ApplicationController # :nodoc:
     params.require(:challenge).permit(:name, :description, :start_date, :team_id)
   end
 
-  def challenge_action_params
-    { challenge_id: @challenge, user_id: current_user, streak_count: 0 }
+  def create_challenge_actions
+    @actions = ChallengeAction.new(action_params)
+    @challenge.challenge_actions.push(@actions)
+  end
+
+  def action_params
+    { challenge_id: @challenge, user_id: current_user.id, streak_count: 0 }
+  end
+
+  def find_challenge_ids
+    @challenge_ids = []
+    challenge_actions = ChallengeAction.where(user_id: current_user)
+    challenge_actions.each do |challenge|
+      @challenge_ids.push(challenge.challenge_id)
+    end
   end
 end
