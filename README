@@ -1,15 +1,14 @@
-stories:
+## STORIES
+<hr>
+- A user and the user's group of friends wish to improve themselves with a new habit.
+  - We will denote habits as challenges.
+- A user can create a team where the user's friends join.
+- A user can have many teams by becoming a member of those teams.
+- A user can then create a challenge. The challenge has a title, description, start_date, team (that it belongs to), and a reward.
+- The other users in the team vote to accept or reject. If the challenge is accepted, a streak_count is initialized for each user for that habit.
+- Users must track each day by marking the circle on the team page. If a user misses 3 days, they are disqualified.
+- The users are eliminated until there is one remaining. The remaining user wins the reward.
 
-A user and the user's group of friends wish to improve themselves with a new habit.
+User Signs Up or Signs In. Redirect to Team Show Page.
 
-We will denote habits as challenges.
-
-A user can create a team where the user's friends join.
-
-A user can then create a challenge. The challenge has a title, description, start_date, team (that it belongs to), and a reward.
-
-The other users in the team vote to accept or reject. If the challenge is accepted, a streak_count is initialized for each user for that habit.
-
-Users must track each day by marking the circle on the team page. If a user misses 3 days, they are disqualified.
-
-The users are eliminated until there is one remaining. The remaining user wins the reward.
+Team Show Page shows team members and current habits

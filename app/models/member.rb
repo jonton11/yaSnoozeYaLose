@@ -1,4 +1,4 @@
-class TeamUser < ActiveRecord::Base # :nodoc:
+class Member < ActiveRecord::Base # :nodoc:
   belongs_to :user
   belongs_to :team
 

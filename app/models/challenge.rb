@@ -2,13 +2,13 @@ class Challenge < ActiveRecord::Base # :nodoc:
   include AASM
   belongs_to :team
 
-  validates :name, presence: true
-  validates :description, presence: true
+  validates :name, presence: { message: 'Your Challenge must have a name!' }
+  validates :description, presence: { message: 'Please describe the Challenge!' }
   validates :start_date, presence: true
-  # validates :reward, presence: true
+  # validates :wager, presence: true
 
-  has_many :user_challenges, dependent: :destroy
-  has_many :users, through: :user_challenges
+  has_many :challenge_actions, dependent: :destroy
+  has_many :users, through: :challenge_actions
 
   aasm whiny_transition: false do
     state :request, initial: true
@@ -26,4 +26,13 @@ class Challenge < ActiveRecord::Base # :nodoc:
       transitions from: :accepted, to: :completed
     end
   end
+
+  # How can we refactor?
+  # def name_error
+  #   'Your Challenge must have a name!'
+  # end
+  #
+  # def description_error
+  #   'Please describe the Challenge!'
+  # end
 end

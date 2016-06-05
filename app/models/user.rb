@@ -5,13 +5,15 @@ class User < ActiveRecord::Base # :nodoc:
 
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :email, uniqueness: true, presence: true, format: VALID_EMAIL_REGEX
+  validates :email, uniqueness: { message: 'That email has already been used.' },
+                      presence: { message: 'You must provide an email!' },
+                      format: VALID_EMAIL_REGEX
 
-  has_many :user_challenges, dependent: :destroy
-  has_many :users_challenges, through: :user_challenges, source: :challenge
+  has_many :challenge_actions, dependent: :destroy
+  has_many :users_challenges, through: :challenge_actions, source: :challenge
 
-  has_many :team_users, dependent: :destroy
-  has_many :teams_users, through: :team_users, source: :team
+  has_many :members, dependent: :destroy
+  has_many :team_members, through: :members, source: :team
 
   def full_name
     "#{first_name} #{last_name}"

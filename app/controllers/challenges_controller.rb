@@ -2,7 +2,8 @@ class ChallengesController < ApplicationController # :nodoc:
   before_action :set_challenge, only: [:show, :edit, :update, :destroy]
 
   def index
-    @challenges = Challenge.all
+    player_challenges = ChallengeAction.all.where(user_id: current_user)
+    @challenges = Challenge.all.where(player_challenges)
   end
 
   def show
@@ -17,7 +18,7 @@ class ChallengesController < ApplicationController # :nodoc:
 
   def create
     @challenge = Challenge.new(challenge_params)
-    @streak = UserChallenge.new(challenge_id: @challenge, user_id: current_user, streak_count: 0)
+    @current_streak = ChallengeAction.new(challenge_action_params)
 
     respond_to do |format|
       if @challenge.save
@@ -59,8 +60,8 @@ class ChallengesController < ApplicationController # :nodoc:
   def challenge_params
     params.require(:challenge).permit(:name, :description, :start_date, :team_id)
   end
-  #
-  # def user_challenges_params
-  #   params.require(:user_challenges).permit(:challenge_id, :user_id, :streak_count)
-  # end
+
+  def challenge_action_params
+    { challenge_id: @challenge, user_id: current_user, streak_count: 0 }
+  end
 end
