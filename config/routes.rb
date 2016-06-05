@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :challenges do
-    resources :challenge_actions, only: [:create, :update, :destroy]
+    resources :challenge_actions, only: [:update]
   end
 
   # Can we refactor this? teams/teams/join is gross
