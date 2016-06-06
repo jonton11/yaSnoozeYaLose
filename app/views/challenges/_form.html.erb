@@ -3,8 +3,8 @@
     <div class="form-inputs">
       <%= f.input :name %>
       <%= f.input :description %>
-      <%= f.input :start_date %>
-      <%= f.association :team, as: :collection_select, collection: @teams %>
+      <%= f.input :start_date, as: :datetime_picker, minDate: Date.tomorrow, input_html: {id: 'date' } %>
+      <%= f.association :team, collection: @teams %>
     </div>
     <div class="form-actions">
       <%= f.button :submit %>

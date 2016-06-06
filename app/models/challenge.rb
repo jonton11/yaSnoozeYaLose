@@ -4,7 +4,11 @@ class Challenge < ActiveRecord::Base # :nodoc:
 
   validates :name, presence: { message: 'Your Challenge must have a name!' }
   validates :description, presence: { message: 'Please describe the Challenge!' }
-  validates :start_date, presence: true
+  validates :start_date, presence: true,
+                         date: { after: Proc.new { Date.today },
+                                 message: 'Challenges must begin after today!' },
+                         on: :create
+  validates :team, presence: { message: 'What team is this challenge for?' }
   # validates :wager, presence: true
 
   has_many :challenge_actions, dependent: :destroy

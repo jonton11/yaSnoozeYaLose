@@ -13,7 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require bootstrap-sprockets
 //= require_tree .
+//= require bootstrap-sprockets
 //= require Chart
 //= require excanvas
+//= require moment
+//= require bootstrap-datetimepicker
+//= require pickers
+//= require minDate

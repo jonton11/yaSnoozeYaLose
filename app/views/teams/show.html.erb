@@ -1,64 +1,16 @@
 <!-- TODO: Style -->
 
 <div class="container">
-  <p>
+  <h3>
     <strong>TEAM:</strong>
-    <%= @team.name %>
-  </p>
+    <%= @team.name %><hr />
+  </h3>
 
-  <!-- Current User Tracker -->
-  <p>
-    Player: <%= current_user.full_name %>
-  </p>
-
-<%#= form_for(@challenges) do |f| %>
-
-  <!-- Display tracker circles -->
-  <% Date::DAYNAMES.each do |day| %>
-   <div class="checkbox">
-     <%= day %>
-     <i id="tracker" class="fa fa-circle-thin fa-2x"><input type="checkbox"></i>
-   </div>
+  <h3> <strong> CHALLENGES </strong></h3>
+  <% @challenges.each_with_index do |challenge, index| %>
+    <p>
+      <%= link_to "#{index+1}: #{challenge.name}", challenge_path(challenge) %>
+    </p>
   <% end %>
-  <hr />
-<%# end %>
 
-  <!-- Team Tracker -->
-  <% @team.users.each do |user| %>
-    <% unless current_user == user %>
-     <p> Player: <%= user.full_name %>
-     <% Date::DAYNAMES.each do |day| %>
-      <div class="checkbox">
-        <%= day %>
-        <i id="tracker" class="fa fa-circle-thin fa-2x"><input type="checkbox"></i></span>
-      </div>
-     <% end %>
-     </p>
-     <hr />
-     <% end %>
-   <% end %>
-
- <span id="avg-score">
-   AVERAGE SCORE:
- </span>
- <span id="lead-player">
-   PLAYER IN THE LEAD:
- </span>
- <br /><br />
- <p>
-   GRAPH OF EVERYONE'S PROGRESS DOWN HERE
- </p>
 </div>
-
-<script>
-  $(".fa-circle-thin").click(function(){
-    if ($(this).hasClass('fa-circle-thin')) {
-      $(this).removeClass('fa-circle-thin');
-      $(this).addClass('fa-check-circle');
-    } else {
-      $(this).removeClass('fa-check-circle');
-      $(this).addClass('fa-circle-thin');
-    }
-  });
-  // Event delegation not necessary here? We're only rendering 7 circles max
-</script>

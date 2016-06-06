@@ -5,7 +5,7 @@
   </p>
 
   <p>
-    <strong>Challenge Description:</strong>
+    <strong>Description:</strong>
     <%= @challenge.description %>
   </p>
 
@@ -18,9 +18,7 @@
     <strong>Team:</strong>
     <%= @challenge.team.name %>
   </p>
-  <p>
-    <strong>Streak:</strong>
-    <%= @streak_count %>
-  </p>
-  <%= link_to 'Edit', edit_challenge_path(@challenge) %>
+  <div id="user-streak-count">
+    <%= render "/challenge_actions/streak"  %>
+  </div>
 </div>

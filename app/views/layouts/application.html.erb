@@ -2,9 +2,10 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= content_for?(:title) ? yield(:title) : "My Application" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : "Ya Snooze Ya Lose" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "My Application" %>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css">
+    <%= favicon_link_tag 'favicon-clock-o.ico' %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>

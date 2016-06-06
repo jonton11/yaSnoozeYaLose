@@ -11,7 +11,10 @@ gem 'chartjs-ror'
 gem 'font-awesome-rails'
 gem 'virtus'
 gem 'aasm'
-# Use ActiveModel has_secure_password
+gem 'has_streak'
+gem 'date_validator'
+gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: 'master', submodules: true
+gem 'momentjs-rails', '~> 2.9', :github => 'derekprior/momentjs-rails'
 gem 'bcrypt', '~> 3.1.7'
 group :development, :test do
   gem 'byebug'

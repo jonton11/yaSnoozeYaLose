@@ -1,0 +1,61 @@
+<hr />
+<!-- Current User Tracker -->
+<p>
+  Player: <%= current_user.full_name %>
+</p>
+
+<!-- Display tracker circles -->
+<% Date::DAYNAMES.each do |day| %>
+  <div class="checkbox">
+    <%= day %>
+    <i id="tracker" class="fa fa-circle-thin fa-2x"><input type="checkbox"></i>
+  </div>
+<% end %>
+<span style="float: right">
+  <%= "STREAK: #{@streak_count}" %>
+</span>
+<br />
+<span style="float: right">
+  <%= link_to "Increase Streak!", challenge_challenge_action_path(@challenge, @challenge_action), method: :patch %>
+</span>
+<hr />
+
+<!-- Team Tracker -->
+<% @team.users.each do |user| %>
+  <% unless current_user == user %>
+   <p> Player: <%= user.full_name %>
+   <% Date::DAYNAMES.each do |day| %>
+    <div class="checkbox">
+      <%= day %>
+      <i id="tracker" class="fa fa-circle-thin fa-2x"><input type="checkbox"></i></span>
+    </div>
+   <% end %>
+   </p>
+   <hr />
+   <% end %>
+ <% end %>
+
+ <span id="avg-score">
+   <%= "AVERAGE SCORE: " %>
+ </span>
+ <span id="lead-player">
+   PLAYER IN THE LEAD:
+ </span>
+ <br /><br />
+ <p>
+   GRAPH OF EVERYONE'S PROGRESS DOWN HERE
+ </p>
+
+
+<script>
+  $(".fa-circle-thin").click(function(){
+    if ($(this).hasClass('fa-circle-thin')) {
+      $(this).removeClass('fa-circle-thin');
+      $(this).addClass('fa-check-circle');
+    } else {
+      $(this).removeClass('fa-check-circle');
+      $(this).addClass('fa-circle-thin');
+    }
+  });
+  // Event delegation not necessary here? We're only rendering 7 circles max
+</script>
