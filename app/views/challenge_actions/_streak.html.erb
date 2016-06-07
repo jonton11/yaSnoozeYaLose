@@ -3,7 +3,6 @@
 <p>
   Player: <%= current_user.full_name %>
 </p>
-
 <!-- Display tracker circles -->
 <% Date::DAYNAMES.each do |day| %>
   <div class="checkbox">
@@ -30,20 +29,26 @@
       <i id="tracker" class="fa fa-circle-thin fa-2x"><input type="checkbox"></i></span>
     </div>
    <% end %>
+   <span style="float: right">
+     <%= "STREAK: #{user.challenge_actions.find_by_challenge_id(@challenge).streak_count}" %>
+   </span>
    </p>
    <hr />
    <% end %>
  <% end %>
 
  <span id="avg-score">
-   <%= "AVERAGE SCORE: " %>
+   <%= "AVERAGE STREAK: #{@avg_streak}" %>
  </span>
  <span id="lead-player">
-   PLAYER IN THE LEAD:
+   <% if @leading_player %>
+    <%= "PLAYER IN THE LEAD: #{@leading_player.full_name}" %>
+   <% end %>
  </span>
  <br /><br />
  <p>
    GRAPH OF EVERYONE'S PROGRESS DOWN HERE
+   <%#= pie_chart @streak_count %>
  </p>
 
 

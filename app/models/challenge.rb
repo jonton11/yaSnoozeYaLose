@@ -21,22 +21,13 @@ class Challenge < ActiveRecord::Base # :nodoc:
     state :completed
 
     event :accept do
-      transitions from: :draft, to: :accepted
+      transitions from: :request, to: :accepted
     end
     event :reject do
-      transitions from: :draft, to: :rejected
+      transitions from: :request, to: :rejected
     end
     event :complete do
       transitions from: :accepted, to: :completed
     end
   end
-
-  # How can we refactor?
-  # def name_error
-  #   'Your Challenge must have a name!'
-  # end
-  #
-  # def description_error
-  #   'Please describe the Challenge!'
-  # end
 end

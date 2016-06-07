@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController # :nodoc:
   before_action :authenticate_user!
-  before_action :set_team, only: [:show, :edit, :update, :destroy]
+  before_action :set_team, only: [:show, :edit, :update, :destroy, :team_requests]
 
   def index
     find_team_ids
@@ -8,7 +8,12 @@ class TeamsController < ApplicationController # :nodoc:
   end
 
   def show
-    @challenges = @team.challenges
+    # @challenges = @team.challenges
+    # When states are implemented
+    @challenges = []
+    @team.challenges.each do |challenge|
+      @challenges << challenge if challenge.accepted?
+    end
   end
 
   def new
@@ -57,13 +62,23 @@ class TeamsController < ApplicationController # :nodoc:
     @team = Team.find_by_name(params[:search])
     if @team
       @membership = Member.new(user_id: current_user.id, team_id: @team.id)
-      if @membership.save
-        current_user.members.push(@membership)
-        redirect_to @team
-      else
-        render :join
-        flash[:alert] = 'No team found'
+      respond_to do |format|
+        if @membership.save
+          current_user.members << @membership
+          format.html { redirect_to @team, notice: 'Team updated.' }
+          format.json { render :show, status: :ok, location: @team }
+        else
+          format.html { render :join }
+          format.json { render json: @team.errors, status: :unprocessable_entity }
+        end
       end
+    end
+  end
+
+  def team_requests
+    @request = []
+    @team.challenges.each do |challenge|
+      @request << challenge if challenge.request?
     end
   end
 
@@ -81,7 +96,7 @@ class TeamsController < ApplicationController # :nodoc:
     @team_ids = []
     @member = Member.where(user_id: current_user)
     @member.each do |mem|
-      @team_ids.push(mem.team_id)
+      @team_ids << mem.team_id
     end
   end
 
@@ -91,7 +106,7 @@ class TeamsController < ApplicationController # :nodoc:
     # Controller
     # Must associate both ways because of Many-To-Many
     @member = Member.new(team_id: @team.id, user_id: current_user.id)
-    @team.members.push(@member)
+    @team.members << @member
     # Associate the current user with the team just created
   end
 

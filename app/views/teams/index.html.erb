@@ -2,7 +2,7 @@
   <p id="notice"><%= notice %></p>
 
   <h1>Your Teams</h1>
-
+  <hr />
   <table>
     <thead>
       <tr>
@@ -15,9 +15,8 @@
       <% @teams.each do |team| %>
         <tr>
           <td><%= team.name %></td>
-          <td><%= link_to 'Show', team %></td>
-          <td><%= link_to 'Edit', edit_team_path(team) %></td>
-          <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Team Page', team %></td>
+          <td><%= link_to 'Pending Challenges', request_teams_path(team) %></td>
         </tr>
       <% end %>
     </tbody>

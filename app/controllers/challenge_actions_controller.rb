@@ -10,10 +10,9 @@ class ChallengeActionsController < ApplicationController # :nodoc:
     if @challenge_action.track_date != Date.today
       @challenge_action.track_date = Date.today
       @challenge_action.save
-      redirect_to challenge_path(@challenge)
+      redirect_to challenge_path(@challenge), notice: 'Keep it up!'
     else
-      flash[:alert] = 'Already tracked this habit today!'
-      redirect_to challenge_path(@challenge) # notice you've already tracked this habit today!!
+      redirect_to challenge_path(@challenge), alert: 'Already tracked today!'
     end
   end
 

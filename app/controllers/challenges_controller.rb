@@ -6,10 +6,12 @@ class ChallengesController < ApplicationController # :nodoc:
   end
 
   def show
+    # byebug
     @streak_count = current_user.challenge_actions.find_by_challenge_id(params[:id]).streak_count
     @team = @challenge.team
     @challenge_action = @challenge.challenge_actions.find_by_user_id(current_user)
-    # @streak_count = current_user.challenge_actions.find_by_challenge_id(params[:challenge_id]).streak_count
+    calculate_average_streak
+    calculate_leading_player
   end
 
   def new
@@ -17,8 +19,8 @@ class ChallengesController < ApplicationController # :nodoc:
     set_allowed_teams
   end
 
-  def edit
-  end
+  # def edit
+  # end
 
   def create
     @challenge = Challenge.new(challenge_params)
@@ -55,6 +57,17 @@ class ChallengesController < ApplicationController # :nodoc:
     end
   end
 
+  def vote
+    @challenge = Challenge.find(params[:id])
+    @challenge_action = @challenge.challenge_actions.find_by_user_id(current_user)
+    @vote = @challenge_action.vote
+    @challenge_action.vote = !@vote if @vote == false
+    if @challenge_action.save
+      check_accepted
+      redirect_to request_teams_path(@challenge.team), notice: "VOTED TO ACCEPT THE CHALLENGE: #{@challenge.name}"
+    end
+  end
+
   private
 
   def set_challenge
@@ -65,7 +78,7 @@ class ChallengesController < ApplicationController # :nodoc:
     @team_ids = []
     @memberships = Member.where(user_id: current_user)
     @memberships.each do |member|
-      @team_ids.push(member.team_id)
+      @team_ids << member.team_id
     end
     @teams = Team.where(id: @team_ids)
   end
@@ -79,7 +92,7 @@ class ChallengesController < ApplicationController # :nodoc:
     @team.users.each do |user|
       @user = user
       @actions = ChallengeAction.new(action_params)
-      @challenge.challenge_actions.push(@actions)
+      @challenge.challenge_actions << @actions
     end
   end
 
@@ -91,8 +104,40 @@ class ChallengesController < ApplicationController # :nodoc:
     @challenge_ids = []
     challenge_actions = ChallengeAction.where(user_id: current_user)
     challenge_actions.each do |challenge|
-      @challenge_ids.push(challenge.challenge_id)
+      @challenge_ids << challenge.challenge_id
     end
     @challenges = Challenge.all.where(id: @challenge_ids)
+  end
+
+  def calculate_average_streak
+    @total_streak = 0
+    @team.users.each do |user|
+      @total_streak += user.challenge_actions.find_by_challenge_id(@challenge).streak_count
+    end
+    @avg_streak = @total_streak.to_f / @team.users.count.to_f
+  end
+
+  def calculate_leading_player
+    @max_streak = 0
+    @team.users.each do |user|
+      @count = user.challenge_actions.find_by_challenge_id(@challenge).streak_count
+      if @count > @max_streak
+        @max_streak = @count
+        @leading_player = user
+      end
+    end
+  end
+
+  def check_accepted
+    true_votes = 0
+    @team = @challenge.team
+
+    @team.challenges.find_by_id(@challenge).challenge_actions.each do |user|
+      true_votes = true_votes + 1 if (user.vote == true)
+    end
+
+    if (true_votes * 2) > @team.users.count
+      @challenge.accept!
+    end
   end
 end

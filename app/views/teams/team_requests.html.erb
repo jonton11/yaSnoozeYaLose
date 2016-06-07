@@ -1,0 +1,27 @@
+<div class="container">
+  <h3> Pending Challenge Requests for <%= @team.name %></h3>
+  <hr />
+  <table>
+    <thead>
+      <tr>
+        <th colspan="3">
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @team.challenges.each do |challenge| %>
+      <tr>
+        <% if current_user.challenge_actions.find_by_challenge_id(challenge).vote == false  %>
+        <td>
+          <%= challenge.name %>
+        </td>
+        <td>
+            <%= link_to 'Accept', vote_challenges_path(challenge), class: 'btn btn-primary' %>
+            <%= link_to 'Reject', vote_challenges_path(challenge), class: 'btn btn-warning' %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
