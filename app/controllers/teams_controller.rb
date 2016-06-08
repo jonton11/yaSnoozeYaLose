@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController # :nodoc:
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :join
   before_action :set_team, only: [:show, :edit, :update, :destroy, :team_requests]
 
   def index
@@ -60,15 +60,13 @@ class TeamsController < ApplicationController # :nodoc:
     @team = Team.find_by_name(params[:search])
     if @team
       @membership = Member.new(user_id: current_user.id, team_id: @team.id)
-      respond_to do |format|
-        if @membership.save
-          current_user.members << @membership
-          format.html { redirect_to @team, notice: 'Team updated.' }
-          format.json { render :show, status: :ok, location: @team }
-        else
-          format.html { render :join }
-          format.json { render json: @team.errors, status: :unprocessable_entity }
-        end
+      if @membership.save
+        current_user.members << @membership
+        join_challenges
+        redirect_to @team, notice: 'Team updated.'
+      else
+        flash[:notice] = 'Failed to join'
+        render :join
       end
     end
   end
@@ -108,6 +106,13 @@ class TeamsController < ApplicationController # :nodoc:
       find(:all, conditions: ['name LIKE ?', "%#{search}"])
     else
       false
+    end
+  end
+
+  def join_challenges
+    @team.challenges.each do |challenge|
+      challenge_action = ChallengeAction.new(challenge_id: challenge.id, user_id: current_user.id)
+      current_user.challenge_actions.push(challenge_action)
     end
   end
 end

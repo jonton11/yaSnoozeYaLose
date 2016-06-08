@@ -1,0 +1,21 @@
+var names = [], streak_data = [];
+for (var user in gon.users) {
+  names.push(gon.users[user][user][0]);
+  streak_data.push(gon.users[user][user][1]);
+}
+$(document).ready(function() {
+  var ctx = $("#team-streak").get(0).getContext("2d");
+  data = {
+    labels : names,
+    datasets : [
+      {
+        fillColor : "rgba(220,220,220,0.5)",
+        strokeColor : "rgba(0,0,0,1)",
+        pointColor : "rgba(0, 0, 0, 1)",
+        pointStrokeColor : "#fff",
+        data : streak_data
+      }
+    ]
+  }
+  myNewChart = new Chart($("#team-streak").get(0).getContext("2d")).Bar(data)
+});

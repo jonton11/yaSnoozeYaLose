@@ -1,1 +1,2 @@
 <li><%= link_to "#{current_user.full_name}", edit_user_path(current_user) %></li>
+<li><%= link_to "Log out", sessions_path, method: :delete %></li>

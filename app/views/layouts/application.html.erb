@@ -3,6 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "Ya Snooze Ya Lose" %></title>
+    <%= Gon::Base.render_data %>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "My Application" %>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css">
     <%= favicon_link_tag 'favicon-clock-o.ico' %>

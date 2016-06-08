@@ -6,12 +6,12 @@ class ChallengesController < ApplicationController # :nodoc:
   end
 
   def show
-    # byebug
-    @total_streak = current_user.challenge_actions.find_by_challenge_id(params[:id]).total_streak
+    @total_streak = current_user.challenge_actions.find_by_challenge_id(params[:id]).try(:total_streak) || 0
     @team = @challenge.team
     @challenge_action = @challenge.challenge_actions.find_by_user_id(current_user)
     calculate_average_streak
     calculate_leading_player
+    gon_variables
   end
 
   def new
@@ -112,7 +112,8 @@ class ChallengesController < ApplicationController # :nodoc:
   def calculate_average_streak
     @total_count = 0
     @team.users.each do |user|
-      @total_count += user.challenge_actions.find_by_challenge_id(@challenge).total_streak
+      user.challenge_actions.reload
+      @total_count += user.challenge_actions.find_by_challenge_id(@challenge).try(:total_streak) || 0
     end
     @avg_streak = @total_count.to_f / @team.users.count.to_f
   end
@@ -120,9 +121,7 @@ class ChallengesController < ApplicationController # :nodoc:
   def calculate_leading_player
     @max_streak = 0
     @team.users.each do |user|
-      @count = user.challenge_actions.find_by_challenge_id(@challenge).total_streak
-      # if @count == @max_streak
-      #   @leading_player == "NONE"
+      @count = user.challenge_actions.find_by_challenge_id(@challenge).try(:total_streak) || 0
       if @count > @max_streak
         @max_streak = @count
         @leading_player = user
@@ -133,11 +132,20 @@ class ChallengesController < ApplicationController # :nodoc:
   def check_accepted
     true_votes = 0
     @team = @challenge.team
-
     @team.challenges.find_by_id(@challenge).challenge_actions.each do |user|
       true_votes = true_votes + 1 if (user.vote == true)
     end
-
     @challenge.accept! if (true_votes * 2) > @team.users.count
+  end
+
+  def gon_variables
+    gon.total_streak = @total_streak
+    gon.challenge = @challenge
+    gon.team = @team
+    gon.users = []
+    @team.users.each_with_index do |user, index|
+      gon.users.push({index => [user.full_name , (user.challenge_actions.find_by_challenge_id(@challenge).try(:total_streak) || 0)]})
+    end
+    gon.challenge_action = @challenge_action
   end
 end
