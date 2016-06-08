@@ -1,32 +1,55 @@
 <%= include_gon(:init => true) %>
-<div class="container">
-  <p>
-    <strong>Challenge:</strong>
-    <%= @challenge.name %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= @challenge.description %>
-  </p>
-
-  <p>
-    <strong>Start date:</strong>
-    <%= @challenge.start_date %>
-  </p>
-
-  <p>
-    <strong>Team:</strong>
-    <%= @challenge.team.name %>
-  </p>
-  <p>
-    <% if @challenge.reward %>
-      <strong>Reward:</strong>
-      <%= @challenge.reward %>
-    <% end %>
-  </p>
-  <hr />
-  <div id="user-streak-count">
-    <%= render "/challenge_actions/streak"  %>
+<div class="container-challenges">
+  <br /><br /><br /><br />
+  <div class="flex-info">
+    <div class="challenge-info">
+      <p> <strong>Challenge:</strong>   <%= @challenge.name %> </p>
+      <p> <strong>Description:</strong> <%= @challenge.description %>  </p>
+      <p> <strong>Start date:</strong> <%= @challenge.start_date %>  </p>
+      <p><strong>Team:</strong><%= @challenge.team.name %>  </p>
+      <p>
+        <% if @challenge.reward %>
+          <strong>Reward:</strong>
+          <%= @challenge.reward %>
+        <% end %>
+      </p>
+      <div id="avg-score">
+       <%= "AVERAGE STREAK: #{@avg_streak.round(2)}" %>
+      </div>
+      <div id="lead-player">
+       <% if @leading_player %>
+        <%= "PLAYER IN THE LEAD: #{@leading_player.full_name}" %>
+       <% end %>
+      </div>
+      <br />
+      <span>
+        <% if @challenge_action.track_date != Date.today %>
+          <%= link_to "COMPLETE", challenge_challenge_action_path(@challenge, @challenge_action), method: :patch, class: 'btn btn-danger', style: 'color: white' %>
+        <% else %>
+          <%= link_to "Already tracked!", nil, class: 'btn btn-success disabled', style: 'color: white' %>
+        <% end %>
+      </span>
+    </div>
+    <br />
+    <br />
+    <div class="table-chart">
+      <div class="table-chart-info">
+      <table class="table table-stats">
+        <tbody>
+          <thead>
+            <tr>
+              <th style="border-top: none"> Player Name:  </th>
+              <th style="border-top: none"> Total Streak: </th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= render "challenge_actions/streak" %>
+          </tbody>
+        </tbody>
+      </table>
+    </div>
+    <!-- Team Chart -->
+    <canvas id="team-streak" width="300" height="300"></canvas>
+  <%= javascript_include_tag 'teamStreak' %></div>
   </div>
 </div>

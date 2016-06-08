@@ -17,6 +17,9 @@ gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: '
 gem 'momentjs-rails', '~> 2.9', :github => 'derekprior/momentjs-rails'
 gem 'bcrypt', '~> 3.1.7'
 gem 'gon'
+gem "chartkick"
+gem 'groupdate'
+
 group :development, :test do
   gem 'byebug'
   gem 'rails-erd'

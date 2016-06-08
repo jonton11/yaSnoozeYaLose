@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController # :nodoc:
   before_action :authenticate_user!, except: :join
-  before_action :set_team, only: [:show, :edit, :update, :destroy, :team_requests]
+  before_action :set_team, only: [:show, :edit, :update, :destroy]
 
   def index
     find_team_ids
@@ -63,7 +63,7 @@ class TeamsController < ApplicationController # :nodoc:
       if @membership.save
         current_user.members << @membership
         join_challenges
-        redirect_to @team, notice: 'Team updated.'
+        redirect_to @team, notice: "Joined #{@team.name}!"
       else
         flash[:notice] = 'Failed to join'
         render :join
@@ -73,8 +73,12 @@ class TeamsController < ApplicationController # :nodoc:
 
   def team_requests
     @request = []
-    @team.challenges.each do |challenge|
-      @request << challenge if challenge.request?
+    find_team_ids
+    @teams = Team.where(id: @team_ids)
+    @teams.each do |team|
+      team.challenges.each do |challenge|
+        @request << challenge if challenge.request?
+      end
     end
   end
 
@@ -103,7 +107,7 @@ class TeamsController < ApplicationController # :nodoc:
 
   def self.search_team(search)
     if search
-      find(:all, conditions: ['name LIKE ?', "%#{search}"])
+      find(:all, conditions: ['name LIKE ?', "%#{search.strip}"])
     else
       false
     end

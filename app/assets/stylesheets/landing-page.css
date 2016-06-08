@@ -18,6 +18,11 @@ h6 {
 
 .topnav {
   font-size: 14px;
+  background: #D32f2f;
+}
+
+.navbar-brand topnav a {
+  color: #000;
 }
 
 .lead {
@@ -26,10 +31,10 @@ h6 {
 }
 
 .intro-header {
-  padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+  padding-top: 50px;
   padding-bottom: 50px;
   text-align: center;
-  color: #f8f8f8;
+  background-color: #f44336;
   background-size: cover;
 }
 
@@ -37,7 +42,7 @@ h6 {
   position: relative;
   padding-top: 20%;
   padding-bottom: 20%;
-  color: firebrick;
+  color: #f8f8f8;
 }
 
 .intro-message > h1 {

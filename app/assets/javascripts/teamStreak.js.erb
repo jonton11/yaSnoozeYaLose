@@ -3,19 +3,15 @@ for (var user in gon.users) {
   names.push(gon.users[user][user][0]);
   streak_data.push(gon.users[user][user][1]);
 }
-$(document).ready(function() {
-  var ctx = $("#team-streak").get(0).getContext("2d");
-  data = {
-    labels : names,
-    datasets : [
-      {
-        fillColor : "rgba(220,220,220,0.5)",
-        strokeColor : "rgba(0,0,0,1)",
-        pointColor : "rgba(0, 0, 0, 1)",
-        pointStrokeColor : "#fff",
-        data : streak_data
-      }
-    ]
-  }
-  myNewChart = new Chart($("#team-streak").get(0).getContext("2d")).Bar(data)
-});
+var dynamicData = [];
+for (var user in gon.users) {
+  dynamicData.push({label: gon.users[user][user][0], value: gon.users[user][user][1]});
+}
+
+dynamicData.forEach(function (e, i) {
+    e.color = "hsl(" + (i / dynamicData.length * 360) + ", 50%, 50%)";
+    e.highlight = "hsl(" + (i / dynamicData.length * 360) + ", 50%, 70%)";
+})
+
+var ctx = document.getElementById("team-streak").getContext("2d");
+var myPieChart = new Chart(ctx).Pie(dynamicData);

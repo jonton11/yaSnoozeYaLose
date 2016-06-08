@@ -22,8 +22,8 @@ pre {
 a {
   color: #000;
 
-  &:visited {
-    color: #666;
+  btn-primary > &:visited {
+    color: #fff;
   }
 
   &:hover {
@@ -71,7 +71,7 @@ div {
     list-style: square;
   }
 
-  ul.nav a:hover {
-    color: #fff;
+  a.hover {
+    color: inherit;
   }
 }

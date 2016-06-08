@@ -1,11 +1,12 @@
 <div class="container">
   <p id="notice"><%= notice %></p>
+  <br />
+  <h3>Your Challenges</h3>
 
-  <h1>Your Challenges</h1>
-
-  <table>
+  <table class="table table-hover">
     <thead>
       <tr>
+        <th>Total Streak</th>
         <th>Name</th>
         <th>Description</th>
         <th>Start date</th>
@@ -17,19 +18,14 @@
     <tbody>
       <% @challenges.each do |challenge| %>
         <tr>
+          <td><%= challenge.challenge_actions.find_by_user_id(current_user).total_streak %></td>
           <td><%= challenge.name %></td>
           <td><%= challenge.description %></td>
           <td><%= challenge.start_date %></td>
           <td><%= challenge.team.name %></td>
-          <td><%= link_to 'Show', challenge %></td>
-          <td><%= link_to 'Edit', edit_challenge_path(challenge) %></td>
-          <td><%= link_to 'Destroy', challenge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Challenge Page', challenge %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-
-  <br>
-
-  <%= link_to 'New Challenge', new_challenge_path %>
 </div>

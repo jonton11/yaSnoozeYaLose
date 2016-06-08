@@ -1,7 +1,5 @@
-<!-- Navigation -->
 <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
   <div class="container topnav">
-    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
@@ -9,40 +7,29 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand topnav" href="#">YA SNOOZE YA LOSE</a>
+      <a class="navbar-brand topnav" href="#" style="color: white">YA SNOOZE YA LOSE</a>
     </div>
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li>
-          <a href="#about">About</a>
-        </li>
-        <li>
-          <a href="#services">Services</a>
-        </li>
         <% if !user_signed_in? %>
         <li>
-          <a href="/users/new">Sign Up</a>
+          <a href="/users/new" style="color: white">Sign Up</a>
         </li>
         <li>
-          <a href="/sessions/new">Sign In</a>
+          <a href="/sessions/new" style="color: white">Sign In</a>
         </li>
         <% else %>
         <li>
-          <a href="/challenges/new">New Challenge</a>
+          <a href="/challenges" style="color: white">Challenge!</a>
         </li>
-        <li>
-          <a id="name-bar" href="#"><%= current_user.full_name %></a>
-        </li>
+        <li><%= link_to "#{current_user.full_name}", edit_user_path(current_user), style: "color: white" %></li>
+        <li><%= link_to "Log out", sessions_path, method: :delete, style: "color: white" %></li>
         <% end %>
       </ul>
     </div>
-    <!-- /.navbar-collapse -->
   </div>
-  <!-- /.container -->
 </nav>
 
-<!-- Header -->
 <div class="intro-header">
   <div class="container">
     <div class="row">
@@ -51,26 +38,12 @@
           <h1>YA SNOOZE YA LOSE</h1>
           <hr class="intro-divider">
           <h3>Compete to Build Habits</h3>
-          <!-- <ul class="list-inline intro-social-buttons">
-            <li>
-                <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
-            </li>
-            <li>
-                <a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
-            </li>
-            <li>
-                <a href="#" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linkedin</span></a>
-            </li>
-          </ul> -->
         </div>
       </div>
     </div>
   </div>
-  <!-- /.container -->
 </div>
-<!-- /.intro-header -->
 
-<!-- Page Content -->
 <a  name="about"></a>
 <div class="content-section-a">
   <div class="container">
@@ -78,85 +51,15 @@
       <div class="col-lg-5 col-sm-6">
         <hr class="section-heading-spacer">
         <div class="clearfix"></div>
-        <h2 class="section-heading">Self Improvement:<br>With Accountability</h2>
-        <p class="lead">Lots of Text for this point!.</p>
+        <h2 class="section-heading">Improve with others</h2>
+        <p class="lead">Compete against your friends to see who can improve the most!</p>
       </div>
       <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-        <!-- <img class="img-responsive" src="" alt=""> -->
-        GRAPH GOES HERE!
+        <%= image_tag("graph1.png") %>
       </div>
     </div>
   </div>
-  <!-- /.container -->
 </div>
-<!-- /.content-section-a -->
-
-<div class="content-section-b">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
-        <hr class="section-heading-spacer">
-        <div class="clearfix"></div>
-        <h2 class="section-heading">Track Your Progress<br>or don't...whatever</h2>
-        <p class="lead">More Text!</p>
-      </div>
-      <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-        <!-- <img class="img-responsive" src="" alt=""> -->
-        ANOTHER GRAPH!!
-      </div>
-    </div>
-  </div>
-  <!-- /.container -->
-</div>
-<!-- /.content-section-b -->
-
-<div class="content-section-a">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-5 col-sm-6">
-        <hr class="section-heading-spacer">
-        <div class="clearfix"></div>
-        <h2 class="section-heading">WIN REWARDS<br>LOSER PAYS FOR DRINKS</h2>
-        <p class="lead">do it</a>.</p>
-      </div>
-      <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-        <!-- <img class="img-responsive" src="" alt=""> -->
-        WIN BIG OR GO HOME
-      </div>
-    </div>
-  </div>
-  <!-- /.container -->
-</div>
-<!-- /.content-section-a -->
-
-<a  name="services"></a>
-<div class="banner">
-  <div class="container">
-  <div class="row">
-    <div class="col-lg-6">
-        <h2>SHAMELESS PLUG TO MY SOCIAL MEDIA:</h2><br />
-        <h2>FOLLOW ME @JONTON</h3>
-    </div>
-    <div class="col-lg-6">
-      <ul class="list-inline banner-social-buttons">
-        <li>
-          <a href="https://twitter.com/jontonw" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
-        </li>
-        <li>
-          <a href="https://github.com/jonton11/" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
-        </li>
-        <li>
-          <a href="#" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linkedin</span></a>
-        </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <!-- /.container -->
-</div>
-<!-- /.banner -->
-
-<!-- Footer -->
 <footer>
   <div class="container">
     <div class="row">

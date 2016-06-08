@@ -1,66 +1,11 @@
-<!-- Current User Tracker -->
-<p>
-  Player: <%= current_user.full_name %>
-</p>
-
-<!-- Display tracker circles -->
-<% Date::DAYNAMES.each do |day| %>
-  <div class="checkbox">
-    <%= day %>
-    <i id="tracker" class="fa fa-circle-thin fa-2x"><input type="checkbox"></i>
-  </div>
-<% end %>
-<span style="float: right">
-  <%= "TOTAL STREAK: #{@total_streak}" %>
-</span>
-<br />
-<span style="float: right">
-  <%= link_to "COMPLETE", challenge_challenge_action_path(@challenge, @challenge_action), method: :patch, class: 'btn btn-primary' %>
-</span>
-<br /><br />
-<hr />
-
 <!-- Team Tracker -->
 <% @team.users.each do |user| %>
-  <% unless current_user == user %>
-   <p> Player: <%= user.full_name %>
-   <% Date::DAYNAMES.each do |day| %>
-    <div class="checkbox">
-      <%= day %>
-      <i id="tracker" class="fa fa-circle-thin fa-2x"><input type="checkbox"></i></span>
-    </div>
-   <% end %>
-   <span style="float: right">
-     <%= "TOTAL STREAK: #{user.challenge_actions.find_by_challenge_id(@challenge).try(:total_streak) || 0}" %>
-   </span>
-   </p>
-   <hr />
-   <% end %>
+  <tr>
+     <td>
+       <%= user.full_name %>
+     </td>
+     <td>
+       <%= "#{user.challenge_actions.find_by_challenge_id(@challenge).try(:total_streak) || 0}" %>
+     </td>
+   </tr>
  <% end %>
-
- <span id="avg-score">
-   <%= "AVERAGE STREAK: #{@avg_streak}" %>
- </span>
- <span id="lead-player">
-   <% if @leading_player %>
-    <%= "PLAYER IN THE LEAD: #{@leading_player.full_name}" %>
-   <% end %>
- </span>
- <br /><br />
-
-<!-- Team Chart -->
- <canvas id="team-streak" width="400" height="400"></canvas>
-<%= javascript_include_tag 'teamStreak' %>
-
-<!-- Temp for tracker circles -->
-<script>
-  $(".fa-circle-thin").click(function(){
-    if ($(this).hasClass('fa-circle-thin')) {
-      $(this).removeClass('fa-circle-thin');
-      $(this).addClass('fa-check-circle');
-    } else {
-      $(this).removeClass('fa-check-circle');
-      $(this).addClass('fa-circle-thin');
-    }
-  });
-</script>

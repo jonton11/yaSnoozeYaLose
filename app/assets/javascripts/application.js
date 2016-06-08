@@ -22,3 +22,4 @@
 //= require pickers
 //= require minDate
 //= require teamStreak
+//= require chartkick

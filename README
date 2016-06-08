@@ -13,16 +13,4 @@ User Signs Up or Signs In. Redirect to Team Show Page.
 
 Team Show Page shows team members and current habits
 
-# every time a user does something for the day => create new record (streak event)
-# => Date.now()
-# => check when the last date object in controller
-# streak_event
-# if challenge_action.streak_events.last.created_at > 2 days
-  # streak_count = 0
-  # streak_total
-  # streak? = true/false
-  # streak_event.each do |streak|
-  #   false_total = false_total + 1 if streak.boolean = false
-  if false => user.streak.freeze
-
 day of week = challenge_action.streak_events.last.created_at.wday
