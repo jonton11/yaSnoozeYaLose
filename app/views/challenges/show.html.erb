@@ -1,24 +1,24 @@
 <%= include_gon(:init => true) %>
 <div class="container-challenges">
-  <br /><br /><br /><br />
-  <div class="flex-info">
-    <div class="challenge-info">
-      <p> <strong>Challenge:</strong>   <%= @challenge.name %> </p>
-      <p> <strong>Description:</strong> <%= @challenge.description %>  </p>
-      <p> <strong>Start date:</strong> <%= @challenge.start_date %>  </p>
-      <p><strong>Team:</strong><%= @challenge.team.name %>  </p>
+  <br />
+    <div class="challenge-info col-md-3 col-md-offset-1 col-sm-12">
+      <h1> <%= @challenge.name %> </h1><br />
+      <p> <%= @challenge.description %> </p>
+      <p> <strong>Start Date: </strong> <%= @challenge.start_date %>  </p>
+      <p><strong>Team: </strong><%= @challenge.team.name %>  </p>
       <p>
         <% if @challenge.reward %>
-          <strong>Reward:</strong>
+          <strong>Reward: </strong>
           <%= @challenge.reward %>
         <% end %>
       </p>
       <div id="avg-score">
-       <%= "AVERAGE STREAK: #{@avg_streak.round(2)}" %>
+       <strong>Average Streak: </strong><%= "#{@avg_streak.round(2)}" %>
       </div>
+      <br />
       <div id="lead-player">
        <% if @leading_player %>
-        <%= "PLAYER IN THE LEAD: #{@leading_player.full_name}" %>
+        <strong>Leading Player: </strong><%= "#{@leading_player.full_name}" %>
        <% end %>
       </div>
       <br />
@@ -32,14 +32,13 @@
     </div>
     <br />
     <br />
-    <div class="table-chart">
-      <div class="table-chart-info">
+    <div class="table-chart col-md-4 col-sm-12">
       <table class="table table-stats">
         <tbody>
           <thead>
             <tr>
-              <th style="border-top: none"> Player Name:  </th>
-              <th style="border-top: none"> Total Streak: </th>
+              <th style="border-top: none"> Player Name  </th>
+              <th style="border-top: none"> Total Streak </th>
             </tr>
           </thead>
           <tbody>
@@ -49,7 +48,8 @@
       </table>
     </div>
     <!-- Team Chart -->
-    <canvas id="team-streak" width="300" height="300"></canvas>
-  <%= javascript_include_tag 'teamStreak' %></div>
-  </div>
+    <div class="text-center">
+      <canvas id="team-streak" width="300" height="300"></canvas>
+      <%= javascript_include_tag 'teamStreak' %>
+    </div>
 </div>

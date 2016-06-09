@@ -2,23 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.container-challenges {
-  margin-top: 20px;
-  margin-left: 20px;
-}
-
-.table-stats {
-  width: 50%;
-}
-
-canvas {
+.challenge-info > h1 {
+  font-size: 2em;
 }
 
 .table-chart {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-right: 50px;
 }
 
 .flex-info {
@@ -28,5 +19,4 @@ canvas {
 }
 
 .challenge-info {
-  margin-left: 25px;
 }

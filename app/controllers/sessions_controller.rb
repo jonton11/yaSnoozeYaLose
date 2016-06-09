@@ -8,7 +8,7 @@ class SessionsController < ApplicationController # :nodoc:
     user = User.find_by_email params[:email]
     if user && user.authenticate(params[:password])
       sign_in(user)
-      redirect_to root_path, notice: 'Signed In!'
+      redirect_to challenges_path, notice: 'Signed In!'
     else
       flash[:alert] = 'Wrong Credentials!'
       render :new

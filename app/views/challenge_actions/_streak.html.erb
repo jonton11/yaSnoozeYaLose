@@ -4,7 +4,7 @@
      <td>
        <%= user.full_name %>
      </td>
-     <td>
+     <td align="center">
        <%= "#{user.challenge_actions.find_by_challenge_id(@challenge).try(:total_streak) || 0}" %>
      </td>
    </tr>

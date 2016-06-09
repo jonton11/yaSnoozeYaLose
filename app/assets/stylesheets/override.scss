@@ -14,3 +14,7 @@ li > a:focus {
 btn-primary > a:visited {
   color: #fff;
 }
+
+li > a:not(:focus) {
+  background-color: transparent !important;
+}
