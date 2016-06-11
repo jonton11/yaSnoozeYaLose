@@ -42,7 +42,10 @@ class ChallengeActionsController < ApplicationController # :nodoc:
       @streak += 1
     end
     @challenge_action.total_streak += 1
-    @challenge_action.streak_events << @streak_event
+    @streak_event.total_streak = @challenge_action.total_streak
+    if @streak_event.save
+      @challenge_action.streak_events << @streak_event
+    end
   end
 
   def streak_busted?

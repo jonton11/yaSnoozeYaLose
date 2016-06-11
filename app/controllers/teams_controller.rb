@@ -65,7 +65,7 @@ class TeamsController < ApplicationController # :nodoc:
         join_challenges
         redirect_to @team, notice: "Joined #{@team.name}!"
       else
-        flash[:notice] = 'Failed to join'
+        flash[:notice] = "Failed to join #{@team.name}"
         render :join
       end
     end
