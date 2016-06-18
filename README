@@ -17,17 +17,12 @@ Team Show Page shows team members and current habits
 # => Date.now()
 # => check when the last date object in controller
 # streak_event
-# if Streak_event.last.created_at > 2 days
+# if challenge_action.streak_events.last.created_at > 2 days
   # streak_count = 0
+  # streak_total
   # streak? = true/false
+  # streak_event.each do |streak|
+  #   false_total = false_total + 1 if streak.boolean = false
+  if false => user.streak.freeze
 
-@challenge.challenge_action.find_by_challenge_id(@challenge).vote
-
-@vote_false = 0
-@team.challenge.find_by_id(@challenge).challenge_actions.each do |user|
-  @vote_false = @vote_total + 1 if !user.vote
-end
-
-if (@vote_false * 2) > @team.users.count
-  @challenge.accept!
-end
+day of week = challenge_action.streak_events.last.created_at.wday

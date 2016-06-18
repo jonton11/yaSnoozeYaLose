@@ -21,3 +21,4 @@
 //= require bootstrap-datetimepicker
 //= require pickers
 //= require minDate
+//= require teamStreak

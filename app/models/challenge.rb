@@ -9,7 +9,7 @@ class Challenge < ActiveRecord::Base # :nodoc:
                                  message: 'Challenges must begin after today!' },
                          on: :create
   validates :team, presence: { message: 'What team is this challenge for?' }
-  # validates :wager, presence: true
+  # validates :reward, presence: true
 
   has_many :challenge_actions, dependent: :destroy
   has_many :users, through: :challenge_actions

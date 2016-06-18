@@ -1,8 +1,8 @@
-<hr />
 <!-- Current User Tracker -->
 <p>
   Player: <%= current_user.full_name %>
 </p>
+
 <!-- Display tracker circles -->
 <% Date::DAYNAMES.each do |day| %>
   <div class="checkbox">
@@ -11,7 +11,7 @@
   </div>
 <% end %>
 <span style="float: right">
-  <%= "STREAK: #{@streak_count}" %>
+  <%= "TOTAL STREAK: #{@total_streak}" %>
 </span>
 <br />
 <span style="float: right">
@@ -30,7 +30,7 @@
     </div>
    <% end %>
    <span style="float: right">
-     <%= "STREAK: #{user.challenge_actions.find_by_challenge_id(@challenge).streak_count}" %>
+     <%= "TOTAL STREAK: #{user.challenge_actions.find_by_challenge_id(@challenge).total_streak}" %>
    </span>
    </p>
    <hr />
@@ -46,11 +46,9 @@
    <% end %>
  </span>
  <br /><br />
- <p>
-   GRAPH OF EVERYONE'S PROGRESS DOWN HERE
-   <%#= pie_chart @streak_count %>
- </p>
+ <canvas id="team-streak" width="256" height="256"></canvas>
 
+ <%= javascript_include_tag 'teamStreak', 'data-turbolinks-track' => true %>
 
 <script>
   $(".fa-circle-thin").click(function(){
@@ -62,5 +60,4 @@
       $(this).addClass('fa-circle-thin');
     }
   });
-  // Event delegation not necessary here? We're only rendering 7 circles max
 </script>

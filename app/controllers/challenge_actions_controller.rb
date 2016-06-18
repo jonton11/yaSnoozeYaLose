@@ -4,11 +4,9 @@ class ChallengeActionsController < ApplicationController # :nodoc:
   before_action :find_challenge_action
 
   def update
-    # Have simply a completed button?
-    # Can we track what day they pressed the button?
-    @challenge_action.streak_count = @streak + 1
     if @challenge_action.track_date != Date.today
       @challenge_action.track_date = Date.today
+      check_streak
       @challenge_action.save
       redirect_to challenge_path(@challenge), notice: 'Keep it up!'
     else
@@ -29,5 +27,26 @@ class ChallengeActionsController < ApplicationController # :nodoc:
   def find_challenge_action
     @challenge_action = @challenge.challenge_actions.find_by_user_id(@user)
     @streak = @challenge_action.streak_count
+  end
+
+  def check_streak
+    if @challenge_action.streak_events.count == 0
+      @streak_event = StreakEvent.new(on_streak: true, challenge_action_id: @challenge_action)
+      @streak = 0
+      @streak += 1
+    elsif streak_busted?
+      @streak_event = StreakEvent.new(on_streak: false, challenge_action_id: @challenge_action)
+      @streak = 1
+    else
+      @streak_event = StreakEvent.new(on_streak: true, challenge_action_id: @challenge_action)
+      @streak += 1
+    end
+    @challenge_action.total_streak += 1
+    @challenge_action.streak_events << @streak_event
+  end
+
+  def streak_busted?
+    @last_tracked = @challenge_action.streak_events.last.created_at.to_date
+    Date.today > @last_tracked.tomorrow ? true : false
   end
 end

@@ -5,6 +5,7 @@
       <%= f.input :description %>
       <%= f.input :start_date, as: :datetime_picker, minDate: Date.tomorrow, input_html: {id: 'date' } %>
       <%= f.association :team, collection: @teams %>
+      <%= f.input :reward, label: 'Reward (Optional)', input_html: {placeholder: 'Reward for winner?'} %>
     </div>
     <div class="form-actions">
       <%= f.button :submit %>

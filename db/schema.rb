@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160606214748) do
+ActiveRecord::Schema.define(version: 20160607184248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20160606214748) do
     t.datetime "updated_at",                   null: false
     t.boolean  "vote",         default: false
     t.date     "track_date"
+    t.integer  "total_streak"
   end
 
   add_index "challenge_actions", ["challenge_id"], name: "index_challenge_actions_on_challenge_id", using: :btree
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 20160606214748) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "aasm_state"
+    t.string   "reward"
   end
 
   add_index "challenges", ["team_id"], name: "index_challenges_on_team_id", using: :btree
@@ -50,6 +52,15 @@ ActiveRecord::Schema.define(version: 20160606214748) do
 
   add_index "members", ["team_id"], name: "index_members_on_team_id", using: :btree
   add_index "members", ["user_id"], name: "index_members_on_user_id", using: :btree
+
+  create_table "streak_events", force: :cascade do |t|
+    t.boolean  "on_streak"
+    t.integer  "challenge_action_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "streak_events", ["challenge_action_id"], name: "index_streak_events_on_challenge_action_id", using: :btree
 
   create_table "teams", force: :cascade do |t|
     t.string   "name"
@@ -71,4 +82,5 @@ ActiveRecord::Schema.define(version: 20160606214748) do
   add_foreign_key "challenges", "teams"
   add_foreign_key "members", "teams"
   add_foreign_key "members", "users"
+  add_foreign_key "streak_events", "challenge_actions"
 end

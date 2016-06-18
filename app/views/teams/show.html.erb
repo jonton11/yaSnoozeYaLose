@@ -6,7 +6,7 @@
     <%= @team.name %><hr />
   </h3>
 
-  <h3> <strong> CHALLENGES </strong></h3>
+  <h3> <strong> ACCEPTED CHALLENGES </strong></h3>
   <% @challenges.each_with_index do |challenge, index| %>
     <p>
       <%= link_to "#{index+1}: #{challenge.name}", challenge_path(challenge) %>

@@ -8,8 +8,6 @@ class TeamsController < ApplicationController # :nodoc:
   end
 
   def show
-    # @challenges = @team.challenges
-    # When states are implemented
     @challenges = []
     @team.challenges.each do |challenge|
       @challenges << challenge if challenge.accepted?
@@ -101,13 +99,8 @@ class TeamsController < ApplicationController # :nodoc:
   end
 
   def current_user_joins_team
-    # If the team is saved, create an association between the Team and the
-    # User that created that team. Other users can join the team via Members
-    # Controller
-    # Must associate both ways because of Many-To-Many
     @member = Member.new(team_id: @team.id, user_id: current_user.id)
     @team.members << @member
-    # Associate the current user with the team just created
   end
 
   def self.search_team(search)

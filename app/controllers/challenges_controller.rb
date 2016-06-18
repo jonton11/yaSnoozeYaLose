@@ -7,7 +7,7 @@ class ChallengesController < ApplicationController # :nodoc:
 
   def show
     # byebug
-    @streak_count = current_user.challenge_actions.find_by_challenge_id(params[:id]).streak_count
+    @total_streak = current_user.challenge_actions.find_by_challenge_id(params[:id]).total_streak
     @team = @challenge.team
     @challenge_action = @challenge.challenge_actions.find_by_user_id(current_user)
     calculate_average_streak
@@ -19,8 +19,8 @@ class ChallengesController < ApplicationController # :nodoc:
     set_allowed_teams
   end
 
-  # def edit
-  # end
+  def edit
+  end
 
   def create
     @challenge = Challenge.new(challenge_params)
@@ -64,7 +64,7 @@ class ChallengesController < ApplicationController # :nodoc:
     @challenge_action.vote = !@vote if @vote == false
     if @challenge_action.save
       check_accepted
-      redirect_to request_teams_path(@challenge.team), notice: "VOTED TO ACCEPT THE CHALLENGE: #{@challenge.name}"
+      redirect_to request_teams_path(@challenge.team), notice: "VOTED TO ACCEPT CHALLENGE: #{@challenge.name}"
     end
   end
 
@@ -84,7 +84,7 @@ class ChallengesController < ApplicationController # :nodoc:
   end
 
   def challenge_params
-    params.require(:challenge).permit(:name, :description, :start_date, :team_id)
+    params.require(:challenge).permit(:name, :description, :start_date, :team_id, :reward)
   end
 
   def create_challenge_actions
@@ -110,17 +110,19 @@ class ChallengesController < ApplicationController # :nodoc:
   end
 
   def calculate_average_streak
-    @total_streak = 0
+    @total_count = 0
     @team.users.each do |user|
-      @total_streak += user.challenge_actions.find_by_challenge_id(@challenge).streak_count
+      @total_count += user.challenge_actions.find_by_challenge_id(@challenge).total_streak
     end
-    @avg_streak = @total_streak.to_f / @team.users.count.to_f
+    @avg_streak = @total_count.to_f / @team.users.count.to_f
   end
 
   def calculate_leading_player
     @max_streak = 0
     @team.users.each do |user|
-      @count = user.challenge_actions.find_by_challenge_id(@challenge).streak_count
+      @count = user.challenge_actions.find_by_challenge_id(@challenge).total_streak
+      # if @count == @max_streak
+      #   @leading_player == "NONE"
       if @count > @max_streak
         @max_streak = @count
         @leading_player = user
@@ -136,8 +138,6 @@ class ChallengesController < ApplicationController # :nodoc:
       true_votes = true_votes + 1 if (user.vote == true)
     end
 
-    if (true_votes * 2) > @team.users.count
-      @challenge.accept!
-    end
+    @challenge.accept! if (true_votes * 2) > @team.users.count
   end
 end
