@@ -16,3 +16,5 @@ Team Show Page shows team members and current habits
 day of week = challenge_action.streak_events.last.created_at.wday
 
 Twillio for annoying messages to team =>
+
+Plot streak_events.total_streak vs streak_events.created_at

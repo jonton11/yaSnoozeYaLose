@@ -12,11 +12,13 @@
       <ul class="nav navbar-nav">
         <%= render 'layouts/navigation_links' %>
       </ul>
-      <% if user_signed_in? %>
       <ul class="nav navbar-nav navbar-right">
+      <% if user_signed_in? %>
         <%= render 'layouts/navigation_logged_in' %>
-      </ul>
+      <% else %>
+        <%= render 'layouts/navigation_sign_in' %>
       <% end %>
+    </ul>
     </div>
   </div>
 </nav>

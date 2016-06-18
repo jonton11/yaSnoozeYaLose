@@ -1,6 +1,8 @@
+<%= include_gon(:init => true) %>
 <p id="notice"><%= notice %></p>
 <div class="container">
-  <br />
+<br />
+<h3> Summary for <%= "#{current_user.full_name}" %></h3>
 <p>
   <strong>First name:</strong>
   <%= @user.first_name %>
@@ -15,4 +17,8 @@
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
+</div>
+<div class="text-center">
+  <canvas id="user-streak" width="300" height="300"></canvas>
+  <%= line_chart @data, @options %>
 </div>

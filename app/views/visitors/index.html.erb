@@ -19,11 +19,9 @@
           <a href="/sessions/new" style="color: white">Sign In</a>
         </li>
         <% else %>
-        <li>
-          <a href="/challenges" style="color: white">Challenge!</a>
-        </li>
-        <li><%= link_to "#{current_user.full_name}", edit_user_path(current_user), style: "color: white" %></li>
-        <li><%= link_to "Log out", sessions_path, method: :delete, style: "color: white" %></li>
+          <li><a href="/challenges" style="color: white">Challenge!</a> </li>
+          <li><%= link_to "#{current_user.full_name}", edit_user_path(current_user), style: "color: white" %></li>
+          <li><%= link_to "Log out", sessions_path, method: :delete, style: "color: white" %></li>
         <% end %>
       </ul>
     </div>

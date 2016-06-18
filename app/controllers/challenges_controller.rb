@@ -1,4 +1,4 @@
-class ChallengesController < ApplicationController
+class ChallengesController < ApplicationController # :nodoc:
   before_action :set_challenge, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -28,7 +28,8 @@ class ChallengesController < ApplicationController
     respond_to do |format|
       if @challenge.save
         create_challenge_actions
-        format.html { redirect_to team_path(@challenge.team), notice: 'Challenge created.' }
+        binding.pry
+        format.html { redirect_to team_path(@challenge.team), notice: 'Created!' }
         format.json { render :show, status: :created, location: @challenge }
       else
         format.html { render :new }
@@ -144,7 +145,7 @@ class ChallengesController < ApplicationController
     gon.team = @team
     gon.users = []
     @team.users.each_with_index do |user, index|
-      gon.users.push({index => [user.full_name , (user.challenge_actions.find_by_challenge_id(@challenge).try(:total_streak) || 0)]})
+      gon.users.push(index => [user.full_name, (user.challenge_actions.find_by_challenge_id(@challenge).try(:total_streak) || 0)])
     end
     gon.challenge_action = @challenge_action
   end

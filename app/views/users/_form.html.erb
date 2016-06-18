@@ -7,10 +7,11 @@
       <%= f.input :password %>
       <%= f.input :password_confirmation %>
       <% if current_page?(new_user_path) %>
-      <%= f.submit 'Sign up', :class => 'button right' %>
+        <%= f.submit 'Sign up', :class => 'button right' %>
       <% else %>
-      <%= f.submit 'Save', :class => 'button right' %>
+        <%= f.submit 'Save', :class => 'button right' %>
       <% end %>
+      <%= link_to "Sign in with Twitter", sign_in_with_twitter_path %>
      </div>
   <% end %>
 </div>

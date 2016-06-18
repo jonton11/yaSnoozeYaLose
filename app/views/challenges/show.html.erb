@@ -7,7 +7,7 @@
       <p> <strong>Start Date: </strong> <%= @challenge.start_date %>  </p>
       <p><strong>Team: </strong><%= @challenge.team.name %>  </p>
       <p>
-        <% if @challenge.reward %>
+        <% if @challenge.reward.length > 0 %>
           <strong>Reward: </strong>
           <%= @challenge.reward %>
         <% end %>
@@ -23,8 +23,8 @@
       </div>
       <br />
       <span>
-        <% if @challenge_action.track_date != Date.today %>
-          <%= link_to "COMPLETE", challenge_challenge_action_path(@challenge, @challenge_action), method: :patch, class: 'btn btn-danger', style: 'color: white' %>
+        <% if check_track_date %>
+          <%= link_to "COMPLETE", challenge_update_action_path(@challenge, @challenge_action), method: :patch, class: 'btn btn-danger', style: 'color: white' %>
         <% else %>
           <%= link_to "Already tracked!", nil, class: 'btn btn-success disabled', style: 'color: white' %>
         <% end %>
@@ -50,6 +50,6 @@
     <!-- Team Chart -->
     <div class="text-center">
       <canvas id="team-streak" width="300" height="300"></canvas>
-      <%= javascript_include_tag 'teamStreak' %>
     </div>
 </div>
+<%= javascript_include_tag 'teamStreak' %>

@@ -4,11 +4,8 @@ class ChallengeActionsController < ApplicationController # :nodoc:
   before_action :find_challenge_action
 
   def update
-    if @challenge_action.track_date != Date.today
-      @challenge_action.track_date = Date.today
-      check_streak
-      @challenge_action.save
-      redirect_to challenge_path(@challenge), notice: 'Keep it up!'
+    if check_track_date
+      change_date_and_update
     else
       redirect_to challenge_path(@challenge), alert: 'Already tracked today!'
     end
@@ -52,4 +49,12 @@ class ChallengeActionsController < ApplicationController # :nodoc:
     @last_tracked = @challenge_action.streak_events.last.created_at.to_date
     Date.today > @last_tracked.tomorrow ? true : false
   end
+
+  def change_date_and_update
+    @challenge_action.track_date = Date.today
+    check_streak
+    @challenge_action.save
+    redirect_to challenge_path(@challenge), notice: 'Keep it up!'
+  end
+
 end

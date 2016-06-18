@@ -7,7 +7,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'friendly_id'
-gem 'chartjs-ror'
+gem 'chartjs-ror', '~> 2.2.0'
 gem 'font-awesome-rails'
 gem 'virtus'
 gem 'aasm'
@@ -19,6 +19,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'gon'
 gem "chartkick"
 gem 'groupdate'
+gem 'omniauth-twitter'
+gem 'twitter'
 
 group :development, :test do
   gem 'byebug'
