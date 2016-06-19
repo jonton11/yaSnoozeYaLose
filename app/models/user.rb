@@ -46,6 +46,22 @@ class User < ActiveRecord::Base # :nodoc:
     user
   end
 
+  def self.find_or_create_with_facebook(omniauth_data)
+  user = User.where(provider: 'facebook', uid: omniauth_data['uid']).first
+  unless user
+    full_name = omniauth_data['info']['name']
+    user = User.create!(first_name:      extract_first_name(full_name),
+                        last_name:        extract_last_name(full_name),
+                        provider:         'facebook',
+                        uid:              omniauth_data['uid'],
+                        password:         SecureRandom.hex(16),
+                        facebook_token:    omniauth_data['credentials']['token'],
+                        facebook_secret:   omniauth_data['credentials']['secret'],
+                        facebook_raw_data: omniauth_data)
+    end
+    user
+  end
+
   private
 
   def self.extract_first_name(full_name)

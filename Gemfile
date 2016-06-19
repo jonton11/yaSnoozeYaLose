@@ -21,6 +21,7 @@ gem "chartkick"
 gem 'groupdate'
 gem 'omniauth-twitter'
 gem 'twitter'
+gem 'omniauth-facebook'
 
 group :development, :test do
   gem 'byebug'
