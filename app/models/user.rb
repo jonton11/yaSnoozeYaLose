@@ -26,10 +26,6 @@ class User < ActiveRecord::Base # :nodoc:
     provider.present? && uid.present?
   end
 
-  def full_name
-    "#{first_name} #{last_name}"
-  end
-
   def self.find_or_create_with_twitter(omniauth_data)
     user = User.where(provider: 'twitter', uid: omniauth_data['uid']).first
     unless user
@@ -83,9 +79,6 @@ class User < ActiveRecord::Base # :nodoc:
   def generate_api_key
     begin
       self.api_key = SecureRandom.hex(32)
-      # Recall that we use self here to reference the object (instance variable)
-      # rather than the class. When we are setting a variable we use self. but
-      # reading a variable it becomes redundant.
     end while User.exists?(api_key: api_key)
   end
 end

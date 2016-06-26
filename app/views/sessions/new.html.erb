@@ -13,9 +13,11 @@
     </div>
     <br />
     <div>
-      <%= submit_tag "Sign In", class: "btn btn-primary" %>
+      <%= link_to "", sign_in_with_twitter_path, class: "fa fa-twitter" %>
+      <%= link_to "", sign_in_with_facebook_path, class: "fa fa-facebook" %>
+      <span class="float: right"><%= submit_tag "Sign In", class: "btn btn-primary" %></span>
     </div>
     <br />
-    <a href="#">Forgot Password?</a>
+    <!-- TODO: Forgot Password <a href="#">Forgot Password?</a> -->
   <% end %>
 </div>

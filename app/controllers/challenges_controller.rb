@@ -1,5 +1,5 @@
 class ChallengesController < ApplicationController # :nodoc:
-  before_action :set_challenge, only: [:show, :edit, :update, :destroy]
+  before_action :set_challenge, only: [:show, :edit, :update, :destroy, :vote]
 
   def index
     find_user_challenges
@@ -11,7 +11,7 @@ class ChallengesController < ApplicationController # :nodoc:
     @challenge_action = @challenge.challenge_actions.find_by_user_id(current_user)
     calculate_average_streak
     calculate_leading_player
-    gon_variables
+    create_gon_variables
   end
 
   def new
@@ -28,7 +28,6 @@ class ChallengesController < ApplicationController # :nodoc:
     respond_to do |format|
       if @challenge.save
         create_challenge_actions
-        binding.pry
         format.html { redirect_to team_path(@challenge.team), notice: 'Created!' }
         format.json { render :show, status: :created, location: @challenge }
       else
@@ -59,13 +58,12 @@ class ChallengesController < ApplicationController # :nodoc:
   end
 
   def vote
-    @challenge = Challenge.find(params[:id])
     @challenge_action = @challenge.challenge_actions.find_by_user_id(current_user)
     @vote = @challenge_action.vote
     @challenge_action.vote = !@vote if @vote == false
     if @challenge_action.save
       check_accepted
-      redirect_to request_teams_path(@challenge.team), notice: "VOTED TO ACCEPT CHALLENGE: #{@challenge.name}"
+      redirect_to request_teams_path(@challenge.team), notice: accept_challenge
     end
   end
 
@@ -139,7 +137,7 @@ class ChallengesController < ApplicationController # :nodoc:
     @challenge.accept! if (true_votes * 2) > @team.users.count
   end
 
-  def gon_variables
+  def create_gon_variables
     gon.total_streak = @total_streak
     gon.challenge = @challenge
     gon.team = @team
@@ -148,5 +146,9 @@ class ChallengesController < ApplicationController # :nodoc:
       gon.users.push(index => [user.full_name, (user.challenge_actions.find_by_challenge_id(@challenge).try(:total_streak) || 0)])
     end
     gon.challenge_action = @challenge_action
+  end
+
+  def accept_challenge
+    "ACCEPTED: #{@challenge.name}"
   end
 end

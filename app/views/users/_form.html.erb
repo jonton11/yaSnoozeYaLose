@@ -11,8 +11,9 @@
       <% else %>
         <%= f.submit 'Save', :class => 'button right' %>
       <% end %>
-      <%= link_to "Sign in with Twitter", sign_in_with_twitter_path %> |
-      <%= link_to "Sign in with Facebook", sign_in_with_facebook_path %>
+      <%= link_to "", sign_in_with_twitter_path, class: "fa fa-twitter" %>
+      <%= link_to "", sign_in_with_facebook_path, class: "fa fa-facebook" %>
+      <!-- TODO: Google+ OAuth <%#= link_to "", root_path, class: "fa fa-google-plus" %> -->
      </div>
   <% end %>
 </div>

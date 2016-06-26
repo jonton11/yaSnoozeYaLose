@@ -1,25 +1,19 @@
 class UsersController < ApplicationController # :nodoc:
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_challenges_and_actions, only: [:show]
 
   def show
-    # Plot total streaks vs created_at
-    @challenges = Challenge.where(challenge_action_id: @challenge_actions)
-    @challenge_actions = ChallengeAction.where(user_id: current_user)
-    gon.total_streaks = {}
-    @total_streaks = []
-    @date_labels = []
+    set_challenges_and_actions
+    @total_streaks, @date_labels = [], []
     # TODO: Need an object to store all challenges and associated streak/created_at
     # @challenges = {Challenge1: {total_streak: X, created_at: Y}, Challenge2: {total_streak: X, created_at: Y}} etc.
     @challenge_actions.each do |challenge|
       challenge.streak_events.each do |event|
-        gon.total_streaks[event.total_streak] = event.created_at
         @total_streaks << event.total_streak
-        @date_labels << event.created_at.strftime("%Y/%m/%d")
-        # binding.pry
+        @date_labels << event.created_at.strftime('%Y/%m/%d')
       end
     end
     generate_chart_data
-    @total_streaks = gon.total_streaks
   end
 
   def new
@@ -67,6 +61,11 @@ class UsersController < ApplicationController # :nodoc:
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def set_challenges_and_actions
+    @challenges = Challenge.where(challenge_action_id: @challenge_actions)
+    @challenge_actions = ChallengeAction.where(user_id: current_user)
   end
 
   def user_params

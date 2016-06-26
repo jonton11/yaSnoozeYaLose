@@ -24,9 +24,9 @@
       <br />
       <span>
         <% if check_track_date %>
-          <%= link_to "COMPLETE", challenge_update_action_path(@challenge, @challenge_action), method: :patch, class: 'btn btn-danger', style: 'color: white' %>
+          <%= link_to "COMPLETE", challenge_update_action_path(@challenge, @challenge_action), method: :patch, class: 'btn btn-danger button-color' %>
         <% else %>
-          <%= link_to "Already tracked!", nil, class: 'btn btn-success disabled', style: 'color: white' %>
+          <%= link_to "Already tracked!", nil, class: 'btn btn-success disabled button-color' %>
         <% end %>
       </span>
     </div>
