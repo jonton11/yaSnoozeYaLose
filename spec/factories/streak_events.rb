@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :streak_event do
-    on_streak false
-    challenge_action nil
+    on_streak { false }
+    challenge_action { nil }
   end
 end

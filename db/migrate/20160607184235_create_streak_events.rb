@@ -1,4 +1,4 @@
-class CreateStreakEvents < ActiveRecord::Migration
+class CreateStreakEvents < ActiveRecord::Migration[7.1]
   def change
     create_table :streak_events do |t|
       t.boolean :on_streak

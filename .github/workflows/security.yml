@@ -1,0 +1,17 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Security scan
+      uses: bundler-audit/bundler-audit-action@v1.1.0
+    - name: Brakeman scan
+      uses: artplan1/brakeman-action@v1.2.1 

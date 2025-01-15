@@ -1,56 +1,58 @@
 source 'https://rubygems.org'
-gem 'rails', '4.2.6'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
-gem 'jquery-rails'
-gem 'turbolinks'
-gem 'jbuilder', '~> 2.0'
+
+ruby '3.3.1'
+
+# Core gems
+gem 'rails', '~> 7.1.3'
+gem 'pg'
+gem 'puma'  # recommended over webrick
+
+# Asset Pipeline
+gem 'sprockets-rails'
+gem 'importmap-rails'  # For modern JavaScript handling
+gem 'turbo-rails'      # Replaces turbolinks
+gem 'stimulus-rails'   # For JavaScript components
+gem 'sassc-rails'      # replaces sass-rails
+gem 'bootstrap', '~> 5.3'  # replaces bootstrap-sass
+
+# Features from your existing app
 gem 'friendly_id'
-gem 'chartjs-ror', '~> 2.2.0'
-gem 'font-awesome-rails'
-gem 'virtus'
-gem 'aasm'
-gem 'has_streak'
-gem 'date_validator'
-gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: 'master', submodules: true
-gem 'momentjs-rails', '~> 2.9', :github => 'derekprior/momentjs-rails'
-gem 'bcrypt', '~> 3.1.7'
-gem 'gon'
-gem "chartkick"
+gem 'chartkick'
 gem 'groupdate'
+gem 'bcrypt'
 gem 'omniauth-twitter'
-gem 'twitter'
 gem 'omniauth-facebook'
+gem 'omniauth-rails_csrf_protection'  # security requirement
+gem 'simple_form'
+
+# Utilities
+gem 'jbuilder'
+gem 'font-awesome-rails'
+gem 'aasm'
+gem 'virtus'
 
 group :development, :test do
-  gem 'byebug'
-  gem 'rails-erd'
-end
-group :development do
-  gem 'web-console', '~> 2.0'
-  gem 'spring'
-end
-gem 'bootstrap-sass'
-gem 'high_voltage'
-gem 'pg'
-gem 'simple_form'
-group :development do
-  gem 'better_errors'
-  gem 'rails_layout'
-  gem 'spring-commands-rspec'
-end
-group :development, :test do
-  gem 'factory_girl_rails'
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'  # replaces factory_girl_rails
   gem 'faker'
   gem 'pry-rails'
-  gem 'pry-rescue'
-  gem 'rspec-rails'
-  gem 'rubocop'
+  gem 'rubocop', require: false
+  gem 'brakeman', require: false
+  gem 'bundler-audit', require: false
 end
+
+group :development do
+  gem 'web-console'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'spring'
+  gem 'spring-commands-rspec'
+  gem 'rails-erd'
+end
+
 group :test do
   gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'selenium-webdriver'
 end

@@ -1,6 +1,7 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :team_user do
-    user nil
-    team nil
+    user { nil }
+    team { nil }
   end
 end
+
